@@ -1,11 +1,11 @@
-// MarkDownEditor.jsx
-'use client';
+
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import '@mdxeditor/editor/style.css';
 import { MDXEditor } from '@mdxeditor/editor';
-import { ALL_PLUGINS } from './_boilerplate';
-import { Modal, Input, List, Spin } from 'antd';
+
+import { Modal, Input, List, } from 'antd';
 import styles from './MarkDownEditor.module.scss';
+import { ALL_PLUGINS } from './_boilerplate';
 
 function MarkDownEditor({
     value,
