@@ -1,16 +1,6 @@
 // CustomLinkDialog.jsx
-
-'use client';
 import React, { useEffect, useState } from 'react';
-import {
-    Modal,
-    Form,
-    Input,
-    Button,
-    Tooltip,
-    message,
-    AutoComplete,
-} from 'antd';
+import { Modal, Form, Input, Button, Tooltip, message, AutoComplete } from 'antd';
 import {
     EditOutlined,
     CopyOutlined,
@@ -27,24 +17,31 @@ import {
     switchFromPreviewToLinkEdit$,
     updateLink$,
     onClickLinkCallback$,
+
+    
+    
 } from '@mdxeditor/editor'; // Adjust the import path if necessary
 
 const CustomLinkDialog = () => {
+
+    
     // Extract necessary state values using useCellValues
-    const [linkDialogState, linkAutocompleteSuggestions, onClickLinkCallback] =
-        useCellValues(
-            linkDialogState$,
-            linkAutocompleteSuggestions$,
-            onClickLinkCallback$,
-        );
+    const [
+        linkDialogState,
+        linkAutocompleteSuggestions,
+        onClickLinkCallback,
+    ] = useCellValues(
+        linkDialogState$,
+        linkAutocompleteSuggestions$,
+        onClickLinkCallback$,
+        
+    );
 
     // Publishers for updating state
     const publishWindowChange = usePublisher(onWindowChange$);
     const updateLink = usePublisher(updateLink$);
     const cancelLinkEdit = usePublisher(cancelLinkEdit$);
-    const switchFromPreviewToLinkEdit = usePublisher(
-        switchFromPreviewToLinkEdit$,
-    );
+    const switchFromPreviewToLinkEdit = usePublisher(switchFromPreviewToLinkEdit$);
     const removeLink = usePublisher(removeLink$);
 
     // Local state for form and UI interactions
@@ -69,11 +66,13 @@ const CustomLinkDialog = () => {
 
     // Control modal visibility based on linkDialogState
     useEffect(() => {
+      
+        
         if (linkDialogState.type !== 'inactive') {
             setIsModalVisible(true);
             if (linkDialogState.type === 'edit') {
-                console.log({ linkDialogState });
-
+                console.log({linkDialogState});
+                
                 form.setFieldsValue({
                     url: linkDialogState.url,
                     title: linkDialogState.title,
@@ -87,6 +86,7 @@ const CustomLinkDialog = () => {
     // Handle form cancellation
     const handleCancel = () => {
         if (linkDialogState$ === 'edit') {
+
             cancelLinkEdit();
         }
 
@@ -113,8 +113,7 @@ const CustomLinkDialog = () => {
 
     // Determine if the URL is external
     const urlIsExternal =
-        linkDialogState.type === 'preview' &&
-        linkDialogState.url.startsWith('http');
+        linkDialogState.type === 'preview' && linkDialogState.url.startsWith('http');
 
     // Handle switching to edit mode
     const handleEdit = () => {
@@ -139,7 +138,9 @@ const CustomLinkDialog = () => {
     return (
         <Modal
             title={
-                linkDialogState.type === 'edit' ? 'Edit Link' : 'Link Preview'
+                linkDialogState.type === 'edit'
+                    ? 'Edit Link'
+                    : 'Link Preview'
             }
             open={isModalVisible}
             onCancel={handleCancel}
@@ -159,7 +160,11 @@ const CustomLinkDialog = () => {
             }}
         >
             {linkDialogState.type === 'edit' && (
-                <Form form={form} layout="vertical" onFinish={handleFinish}>
+                <Form
+                    form={form}
+                    layout="vertical"
+                    onFinish={handleFinish}
+                >
                     {/* URL Field */}
                     <Form.Item
                         label="URL"
@@ -169,14 +174,13 @@ const CustomLinkDialog = () => {
                                 required: true,
                                 message: 'Please enter a URL',
                             },
+        
                         ]}
                     >
                         <AutoComplete
-                            options={linkAutocompleteSuggestions.map(
-                                (suggestion) => ({
-                                    value: suggestion,
-                                }),
-                            )}
+                            options={linkAutocompleteSuggestions.map((suggestion) => ({
+                                value: suggestion,
+                            }))}
                             placeholder="Select or paste an URL"
                             filterOption={(inputValue, option) =>
                                 option.value
@@ -222,7 +226,9 @@ const CustomLinkDialog = () => {
                             <Button type="primary" htmlType="submit">
                                 Save
                             </Button>
-                            <Button onClick={handleCancel}>Cancel</Button>
+                            <Button onClick={handleCancel}>
+                                Cancel
+                            </Button>
                         </div>
                     </Form.Item>
                 </Form>
@@ -237,15 +243,11 @@ const CustomLinkDialog = () => {
                         onClick={handleLinkClick}
                     >
                         {linkDialogState.url}
-                        {urlIsExternal && (
-                            <LinkOutlined style={{ marginLeft: 4 }} />
-                        )}
+                        {urlIsExternal && <LinkOutlined style={{ marginLeft: 4 }} />}
                     </a>
 
                     {linkDialogState.text && (
-                        <p style={{ marginTop: '8px' }}>
-                            {linkDialogState.text}
-                        </p>
+                        <p style={{ marginTop: '8px' }}>{linkDialogState.text}</p>
                     )}
 
                     <div
@@ -268,13 +270,7 @@ const CustomLinkDialog = () => {
                         {/* Copy Button */}
                         <Tooltip title="Copy URL">
                             <Button
-                                icon={
-                                    copyTooltipVisible ? (
-                                        <CheckOutlined />
-                                    ) : (
-                                        <CopyOutlined />
-                                    )
-                                }
+                                icon={copyTooltipVisible ? <CheckOutlined /> : <CopyOutlined />}
                                 onClick={handleCopy}
                                 aria-label="Copy URL"
                             />

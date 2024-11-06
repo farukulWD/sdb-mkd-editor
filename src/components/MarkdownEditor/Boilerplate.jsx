@@ -1,12 +1,10 @@
-'use client';
-
-import React from 'react';
-import styles from './MarkDownEditor.module.scss';
+import React from 'react'
+import styles from "./MarkDownEditor.module.scss"
 import {
     diffSourcePlugin,
     markdownShortcutPlugin,
     AdmonitionDirectiveDescriptor,
-    DirectiveDescriptor,
+
     directivesPlugin,
     frontmatterPlugin,
     headingsPlugin,
@@ -18,16 +16,16 @@ import {
     tablePlugin,
     thematicBreakPlugin,
     toolbarPlugin,
-    SandpackConfig,
     codeBlockPlugin,
     codeMirrorPlugin,
     sandpackPlugin,
     KitchenSinkToolbar,
-} from '@mdxeditor/editor';
+    
+} from '@mdxeditor/editor'
+import dataCode from './dataCode'
+import CustomLinkDialog from './CustomLinkDialog'
+import CustomImageUpload from './CustomImageUpload'
 
-import CustomLinkDialog from './CustomLinkDialog';
-import CustomImageUpload from './CustomImageUpload';
-import dataCode from './dataCode';
 const defaultSnippetContent = `
 export default function App() {
   return (
@@ -37,7 +35,7 @@ export default function App() {
     </div>
   );
 }
-`.trim();
+`.trim()
 
 export const virtuosoSampleSandpackConfig = {
     defaultPreset: 'react',
@@ -50,7 +48,7 @@ export const virtuosoSampleSandpackConfig = {
             sandpackTheme: 'light',
             snippetFileName: '/App.js',
             snippetLanguage: 'jsx',
-            initialSnippetContent: defaultSnippetContent,
+            initialSnippetContent: defaultSnippetContent
         },
         {
             label: 'React',
@@ -60,7 +58,7 @@ export const virtuosoSampleSandpackConfig = {
             sandpackTheme: 'light',
             snippetFileName: '/App.js',
             snippetLanguage: 'jsx',
-            initialSnippetContent: defaultSnippetContent,
+            initialSnippetContent: defaultSnippetContent
         },
         {
             label: 'Virtuoso',
@@ -72,38 +70,34 @@ export const virtuosoSampleSandpackConfig = {
             initialSnippetContent: defaultSnippetContent,
             dependencies: {
                 'react-virtuoso': 'latest',
-                '@ngneat/falso': 'latest',
+                '@ngneat/falso': 'latest'
             },
             files: {
-                '/data.js': dataCode,
-            },
-        },
-    ],
-};
+                '/data.js': dataCode
+            }
+        }
+    ]
+}
+
+
 
 export const YoutubeDirectiveDescriptor = {
     name: 'youtube',
     type: 'leafDirective',
     testNode(node) {
-        return node.name === 'youtube';
+        return node.name === 'youtube'
     },
     attributes: ['id'],
     hasChildren: false,
     Editor: ({ mdastNode, lexicalNode, parentEditor }) => {
         return (
-            <div
-                style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                }}
-            >
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                 <button
                     onClick={() => {
                         parentEditor.update(() => {
-                            lexicalNode.selectNext();
-                            lexicalNode.remove();
-                        });
+                            lexicalNode.selectNext()
+                            lexicalNode.remove()
+                        })
                     }}
                 >
                     delete
@@ -117,25 +111,27 @@ export const YoutubeDirectiveDescriptor = {
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 ></iframe>
             </div>
-        );
-    },
-};
+        )
+    }
+}
+
 
 export const ALL_PLUGINS = [
+  
     toolbarPlugin({
-        toolbarContents: () => <KitchenSinkToolbar />,
+       toolbarContents: () => <KitchenSinkToolbar  /> ,
         toolbarClassName: styles.stickyToolbar,
-    }),
+      }),
     listsPlugin(),
     quotePlugin(),
     headingsPlugin({ allowedHeadingLevels: [1, 2, 3] }),
     linkPlugin({}),
     linkDialogPlugin({
-        LinkDialog: CustomLinkDialog,
+        LinkDialog:CustomLinkDialog,
     }),
     imagePlugin({
-        // imageUploadHandler,
-        ImageDialog: CustomImageUpload,
+      // imageUploadHandler,
+      ImageDialog:CustomImageUpload
     }),
     tablePlugin(),
     thematicBreakPlugin(),
@@ -143,27 +139,19 @@ export const ALL_PLUGINS = [
     codeBlockPlugin({ defaultCodeBlockLanguage: 'txt' }), // Default to 'plaintext'
     sandpackPlugin({ sandpackConfig: virtuosoSampleSandpackConfig }),
     codeMirrorPlugin({
-        codeBlockLanguages: {
-            js: 'JavaScript',
-            css: 'CSS',
-            txt: 'Text',
-            tsx: 'TypeScript',
-            json: 'JSON',
-            plaintext: 'Text', // Handle 'plaintext' as 'Text'
-            null: 'Text', // Catch any null cases explicitly
-            undefined: 'Text', // Catch any undefined cases
-            default: 'Text', // Default to Text
-        },
+      codeBlockLanguages: {
+        js: "JavaScript",
+        css: "CSS",
+        txt: "Text",
+        tsx: "TypeScript",
+        json: "JSON",
+        plaintext: "Text", // Handle 'plaintext' as 'Text'
+        null: "Text", // Catch any null cases explicitly
+        undefined: "Text", // Catch any undefined cases
+        default: "Text", // Default to Text
+      },
     }),
-    directivesPlugin({
-        directiveDescriptors: [
-            YoutubeDirectiveDescriptor,
-            AdmonitionDirectiveDescriptor,
-        ],
-    }),
-    diffSourcePlugin({
-        viewMode: 'rich-text',
-        diffMarkdown: '### Diff Content Here',
-    }), // Ensure valid Markdown
-    markdownShortcutPlugin(),
-];
+    directivesPlugin({ directiveDescriptors: [YoutubeDirectiveDescriptor, AdmonitionDirectiveDescriptor] }),
+    diffSourcePlugin({ viewMode: 'rich-text', diffMarkdown: '### Diff Content Here' }), // Ensure valid Markdown
+    markdownShortcutPlugin()
+  ];
