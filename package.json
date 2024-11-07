@@ -1,6 +1,6 @@
 {
 	"name": "@sdbit/mkd-editor",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "Markdown editor SDB IT",
 	"private": false,
 	"type": "module",
