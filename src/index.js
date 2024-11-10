@@ -1,8 +1,7 @@
-import MarkDownEditor from "@/cmponents/MarkdownEditor/MarkDownEditor"
-import  MarkdownPreview from "@/cmponents/MarkdownPreview/MarkdownPreview"
+import MarkDownEditor from "@/components/MarkdownEditor/MarkDownEditor";
+import MarkdownPreview from "@/components/MarkdownPreview/MarkdownPreview";
 
-
-export default{
+export default {
     MarkDownEditor,
     MarkdownPreview
-}
+};

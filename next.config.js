@@ -2,7 +2,7 @@ const removeImports = require('next-remove-imports')();
 
 const nextConfig = {
   transpilePackages: [
-   '@mdxeditor/editor',
+    '@mdxeditor/editor',
     'antd',
     '@ant-design/icons',
     '@ant-design/icons-svg',
@@ -18,5 +18,6 @@ const nextConfig = {
     return config;
   }
 };
+
 
 module.exports = removeImports(nextConfig);

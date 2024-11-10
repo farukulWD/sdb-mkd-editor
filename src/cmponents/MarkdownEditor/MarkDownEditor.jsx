@@ -98,7 +98,7 @@ function MarkDownEditor({
         placeholder={placeholder}
         ref={editorRef}
         onChange={handleEditorChange}
-        plugins={ALL_PLUGINS}
+        plugins={ALL_PLUGINS(toolbarProps)}
       />
 
       {/* Autocomplete Modal */}
